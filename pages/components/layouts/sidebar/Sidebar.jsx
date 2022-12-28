@@ -27,23 +27,21 @@ const Sidebar = () => {
   };
   return (
     <aside className={style.sidebar}>
-      {Array(5)
-        .fill()
-        .map((i, index) => (
-          <span
-            className={[
-              style.buttons,
-              activeDashbord == index && style.active,
-            ].join(" ")}
-            key={index}
-            onClick={(e) => onDashbord(e, index)}
-          >
-            <div className={style.holder}>
-              {menu[index].icon}
-              {menu[index].title}
-            </div>
-          </span>
-        ))}
+      {menu.map((item, index) => (
+        <span
+          className={[
+            style.buttons,
+            activeDashbord == index && style.active,
+          ].join(" ")}
+          key={index}
+          onClick={(e) => onDashbord(e, index)}
+        >
+          <div className={style.holder}>
+            {item.icon}
+            {item.title}
+          </div>
+        </span>
+      ))}
       <span className={style.subscribe}>
         <Image
           src="/assets/images/subscribe.svg"
