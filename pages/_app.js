@@ -1,6 +1,6 @@
 
 import { Provider } from "react-redux";
-import { wrapper } from "../store/storeConfig";
+import { wrapper } from "../redux/storeConfig";
 import "../styles/globals.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
 

@@ -1,0 +1,24 @@
+/lib
+  /utils.js
+/components
+  /Button.js
+  /Input.js
+  /Layout.js
+/pages
+  /index.js
+  /about.js
+  /contact.js
+/modules
+  /todos
+    /actions.js
+    /reducer.js
+    /selectors.js
+    /components
+      /TodoList.js
+      /TodoItem.js
+  /auth
+    /actions.js
+    /reducer.js
+    /selectors.js
+    /components
+      /LoginForm.js
