@@ -5,12 +5,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice = createSlice({
     name:"auth",
-    initialState: {auth: true},
+    initialState: {auth: false},
     reducers:{
-        login: ()=>{
+        login: (state,action)=>{
             state.auth = true;
         },
-        join: ()=>{
+        join: (state,action)=>{
 
         },
         logout:(state,action)=>{

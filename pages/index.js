@@ -1,9 +1,17 @@
-import React from 'react'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
 
-const index = () => {
+
+
+const inter = Inter({ subsets: ["latin"] });
+
+export default function Home() {
   return (
-    <div>index</div>
-  )
+    <>
+    
+     <h1>HEllo</h1>
+     
+    </>
+  );
 }
-
-export default index

@@ -1,12 +1,12 @@
 import React from "react";
 import Dashboard from "../../components/layouts/body/dashboard/Dashboard";
 
-const index = () => {
+const notification = () => {
   return (
     <Dashboard>
-      <div>index</div>
+      <div>notification</div>
     </Dashboard>
   );
 };
 
-export default index;
+export default notification;
