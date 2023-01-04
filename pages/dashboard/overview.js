@@ -1,10 +1,11 @@
 import React from "react";
 import Dashboard from "../../components/layouts/body/dashboard/Dashboard";
+import Overview from "../../components/layouts/body/dashboard/overview/Overview";
 
 const overview = () => {
   return (
     <Dashboard>
-      <div>overview hello</div>
+      <Overview/>
     </Dashboard>
   );
 };

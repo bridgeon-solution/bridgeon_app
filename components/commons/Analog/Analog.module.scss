@@ -1,0 +1,87 @@
+.analog {
+    // width: 50%;
+    // aspect-ratio: 1/1;
+
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+
+
+
+    svg {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 500px;
+        height: 500px;
+
+        .meter {
+            transform: translate(50%, 51%) scale(9) rotate(143deg);
+            // position: absolute;
+            // top: 0;
+
+            stroke: #f7eee1;
+            fill: none;
+            stroke-width: 1.5px;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 56;
+            stroke-linecap: round;
+        }
+
+        .progress {
+            transform: translate(50%, 51%) scale(9) rotateZ(143deg);
+
+
+            stroke: #2fb2ab;
+            fill: none;
+            stroke-width: 1.7px;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 76;
+            stroke-linecap: round;
+        }
+
+
+
+
+
+
+    }
+
+    .pointer_stick {
+        position: absolute;
+        bottom: 0;
+        width: 75px;
+        height: 60px;
+        background: linear-gradient(#ff9053, white);
+        transform-origin: 50% 100%;
+        rotate: 17deg;
+        clip-path: polygon(50% 0%, 44% 100%, 56% 100%);
+
+
+    }
+
+    .knob {
+        position: absolute;
+
+        width: 20px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        background-color: white;
+        border: 4px solid #ff9053;
+
+
+
+    }
+
+
+
+
+
+
+
+
+}
