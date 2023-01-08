@@ -35,11 +35,12 @@ const Sidebar = () => {
   };
   return (
     <aside className={style.sidebar}>
+    <span className={style.brand}> Bridgeon</span>
       {menu.map((item, index) => (
         <span
           className={[
             style.buttons,
-            activeDashboard == index && style.active,
+            activeDashboard == index && style.active //active the button when user click the button,
           ].join(" ")}
           key={index}
           onClick={(e) => onDashboard(e, index, item.path)}

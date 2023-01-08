@@ -1,14 +1,15 @@
 .header {
-    width: 100vw;
+    position: relative;
+    width: 100%;
     background-color: rgb(255, 255, 255);
-    box-shadow: -6px -17px 20px 6px grey;
+    box-shadow: 20px -18px 20px 6px grey;
     display: grid;
     grid-template-columns: 1fr 6fr 2fr;
     z-index: 3;
     align-items: center;
     justify-content: center;
 
-    .brand {
+    .menu {
         position: relative;
         z-index: 3;
         color: black;

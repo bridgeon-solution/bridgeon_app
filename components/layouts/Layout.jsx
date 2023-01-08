@@ -7,7 +7,7 @@ import Head from "next/head";
 import styles from "../../styles/Home.module.scss";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { useMediaQuery } from "@mantine/hooks";
+// import { useMediaQuery } from "@mui/material";
 
 const RouteOnAuth = ({ children, incomingPage }) => {
   const auth = useSelector((state) => state.auth);
@@ -26,8 +26,6 @@ const RouteOnAuth = ({ children, incomingPage }) => {
 };
 
 const Layouts = ({ children }) => {
-  const notCompatible = useMediaQuery("(min-width: 738px)");
-
   const auth = useSelector((state) => state.auth);
 
   return (
@@ -40,40 +38,27 @@ const Layouts = ({ children }) => {
       </Head>
 
       {/* {Changing layout on route changes} */}
-      {notCompatible ? (
-        <RouteOnAuth incomingPage={children}>
-          <main className={styles.main}>
-            <Header />
-            {/* {authorized users only can asses dashboard} */}
-            {auth ? (
-              <>
-                <section className={styles.body_layout}>
-                  <Sidebar />
+
+      <RouteOnAuth incomingPage={children}>
+        <main className={styles.main}>
+          {/* {authorized users only can asses dashboard} */}
+          {auth ? (
+            <>
+              <section className={styles.layout}>
+                <Sidebar />
+                <div className={styles.body}>
+                  <Header />
                   {children}
-                </section>
-              </>
-            ) : (
-              <>
-                <Welcome />
-              </>
-            )}
-          </main>
-        </RouteOnAuth>
-      ) : (
-        <>
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <h1 style={{paddingRight:"10px"}}>{`This device resolution won't support please try from another device`}</h1>
-          </div>
-        </>
-      )}
+                </div>
+              </section>
+            </>
+          ) : (
+            <>
+              <Welcome />
+            </>
+          )}
+        </main>
+      </RouteOnAuth>
     </>
   );
 };

@@ -3,10 +3,22 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 4;
     gap: 16px;
     padding: 20px;
     box-shadow: -11px 1px 20px 0px grey;
-    $bg:linear-gradient(310deg, rgb(244 159 122), rgb(240 118 138));
+    $bg: linear-gradient(310deg, rgb(244 159 122), rgb(240 118 138));
+    .brand {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+       
+        font-size: 1.5em;
+        font-weight: bold;
+        font-family: type-round;
+    }
     .buttons {
         position: relative;
         border-radius: 9px;
@@ -15,23 +27,27 @@
         font-family: sans-serif;
         // background: linear-gradient(310deg, #f49e7a, #f0768a);
         // box-shadow: inset -4px -4px 4px 0 #00000073, inset 0px 3px 8px 0 white;
-        color: white;
+        color: rgb(126, 126, 126);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        background: rgba(0, 162, 255, 0.712);
+        
 
         &.active {
             transition: all 1s;
             background: linear-gradient(310deg, rgb(54, 54, 54), rgb(54, 54, 54));
- 
-
+            color: white;
+            box-shadow: none !important;
 
         }
 
         &:hover {
-            background-color: rgba(0, 162, 255, 0.712);
+            transition: all .5s;
+
+            background-color: rgba(233, 233, 233, 0.712);
+            // color: rgb(105, 105, 105);
+            box-shadow: inset 1px 3px 6px 0px #bfbebe;
 
         }
 

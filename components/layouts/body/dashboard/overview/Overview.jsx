@@ -4,14 +4,17 @@ import Analog from "../../../../commons/Analog/Analog";
 const Overview = () => {
   return (
     <div className={style.container}>
+      {/* performance */}
       <section>
         <div className={style.performance}>
-          <Analog />
+          <Analog label="Performance" count={100}/>
         </div>
         <div className={style.progress}>
-          <Analog />
+          <Analog label="Progress" count={45}/>
         </div>
       </section>
+
+  
       <section>
         <div className={style.attendance}></div>
       </section>

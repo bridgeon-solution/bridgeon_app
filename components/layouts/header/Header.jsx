@@ -17,7 +17,7 @@ const Header = () => {
   };
   return (
     <AppBar position="static" className={style.header}>
-      <span className={style.brand}>Bridgeon</span>
+      <span className={style.menu}>__</span>
       <nav></nav>
       <span className={style.profile}>
         {auth ? (
