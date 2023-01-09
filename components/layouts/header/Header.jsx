@@ -11,21 +11,28 @@ const Header = () => {
   const openMenu = Boolean(anchor);
   const auth = useSelector((state) => state.auth);
   const route = useRouter();
-  const ProfileAvatar =  <Avatar src="https://mui.com/static/images/avatar/3.jpg" />
+  const ProfileAvatar = (
+    <Avatar src="https://mui.com/static/images/avatar/3.jpg" />
+  );
   const handleClose = () => {
     setAnchor(null);
   };
   return (
-    <AppBar position="static" className={style.header}>
+    <div className={style.header}>
       <span className={style.menu}>__</span>
-      <nav></nav>
+      <span></span>
       <span className={style.profile}>
         {auth ? (
           <>
-            <IconButton onClick={(e)=>setAnchor(e.currentTarget)}>
-             {ProfileAvatar}
+            <IconButton onClick={(e) => setAnchor(e.currentTarget)}>
+              {ProfileAvatar}
             </IconButton>
-            <ProfileMenu open={openMenu} handleClose={handleClose} anchorEl={anchor} Avatar={ProfileAvatar}/>
+            <ProfileMenu
+              open={openMenu}
+              handleClose={handleClose}
+              anchorEl={anchor}
+              Avatar={ProfileAvatar}
+            />
           </>
         ) : (
           <>
@@ -39,7 +46,7 @@ const Header = () => {
           </>
         )}
       </span>
-    </AppBar>
+    </div>
   );
 };
 

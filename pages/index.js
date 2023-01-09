@@ -1,17 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
-
-
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return (
-    <>
-    
-     <h1>HEllo</h1>
-     
-    </>
-  );
+  const router = useRouter();
+  useEffect(() => router.push("/dashboard/overview"), []);
+  return <>Welcome</>;
 }

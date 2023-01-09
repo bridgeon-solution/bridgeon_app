@@ -10,8 +10,8 @@ export default function App({ Component, ...rest }) {
   const { store, props } = wrapper.useWrappedStore(rest);
 
   const theme = useTheme();
-  let matches = true;
-  // matches = useMediaQuery(theme.breakpoints.up("sm"));
+  let matches = useMediaQuery("(min-width:728px)");
+ 
 
   return (
     <Provider store={store}>
@@ -20,7 +20,11 @@ export default function App({ Component, ...rest }) {
           <Component {...props.pageProps} />
         </Layout>
       ) : (
-        "please"
+        <>
+          <div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <h3> ⚠Your device resolution is not 🚫supported please try from another device which have more wide</h3>
+          </div>
+        </>
       )}
     </Provider>
   );

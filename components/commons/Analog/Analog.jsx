@@ -2,19 +2,23 @@ import React, { useEffect, useState } from "react";
 
 import style from "./Analog.module.scss";
 const Analog = ({ sx, label, count }) => {
-  const [progress, setProgress] = useState(0);
+  const [pointer, setPointerProgress] = useState(0);
+  const [progressBar, setProgressBar] = useState(100);
 
   //speedometer whole degree need to complete rotation
   const speedometerConfig = {
-    currentProgress: function () {
-      return (count * (270 - 0)) / 100 + 0;
+    currentPointerProgress: function () {
+      return (count * (270 - 0)) / 100 + 0; //finding the range by percentage
+    },
+    currentBarProgress: function () {
+      return (count * (56 - 100)) / 100 + 100; //finding the range by percentage
     },
   };
 
   //monitor on speedometer changes
   useEffect(() => {
-    console.log(speedometerConfig.currentProgress());
-    setProgress(speedometerConfig.currentProgress()); //get current progress
+    setPointerProgress(speedometerConfig.currentPointerProgress()); //get current pointer position
+    setProgressBar(speedometerConfig.currentBarProgress()); //get current progress bar
   }, [count]);
   //------------------------------------------------------------------------------------------
   return (
@@ -32,13 +36,19 @@ const Analog = ({ sx, label, count }) => {
       <svg>
         <circle cx={0} cy={0} r={10} className={style.meter} />
 
-        <circle cx={0} cy={0} r={10} className={style.progress} />
+        <circle
+          cx={0}
+          cy={0}
+          r={10}
+          className={style.progress}
+          style={{ strokeDashoffset: progressBar, transition: "all 1.3s " }}
+        />
       </svg>
 
       <div className={style.pointerHolder}>
         <div
           className={style.pointer_stick}
-          style={{ rotate: ` ${progress}deg`, transition: "all 1.3s" }}
+          style={{ rotate: ` ${pointer}deg`, transition: "all 1.3s " }}
         ></div>
       </div>
       <div className={style.knob}></div>
@@ -47,12 +57,11 @@ const Analog = ({ sx, label, count }) => {
           position: "absolute",
           bottom: "8%",
           color: "gray",
-          fontFamily: "Gotham",
         }}
       >
         {label}: <span style={{ color: "red" }}>{count}</span>{" "}
       </span>
-    </div> // use s props to define style from higher components
+    </div> // use sx props to define style from higher components
   );
 };
 
