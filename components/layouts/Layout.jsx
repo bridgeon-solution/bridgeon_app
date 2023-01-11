@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 // import { useMediaQuery } from "@mui/material";
 
 const RouteOnAuth = ({ children, incomingPage }) => {
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.userReducer.auth);
   const router = useRouter();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const RouteOnAuth = ({ children, incomingPage }) => {
 };
 
 const Layouts = ({ children }) => {
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.userReducer.auth);
 
   return (
     <>

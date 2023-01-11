@@ -2,7 +2,7 @@ import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 import { Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/authSlice";
+import { logout } from "../../redux/userSlice";
 
 const ProfileMenu = ({ anchorEl, handleClose, open, Avatar }) => {
   const dispatch = useDispatch();
