@@ -10,10 +10,11 @@
         width: 100%;
         padding: 16px;
         box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1), -15px -15px 10px #fff;
+
         button {
             scale: 0.8;
             position: relative;
-            font-size: small;
+            font-size: 15px;
             border-radius: 12px;
             // background-color: rgb(253, 253, 253);
             // margin: 3px;
@@ -28,20 +29,23 @@
         .absence {
             background: rgba(255, 0, 0, 0.904) !important;
             color: white;
+
             &:hover {
                 box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.363), inset -5px -5px 10px rgb(255, 0, 0);
             }
         }
+
         .late {
             background: rgba(255, 199, 17, 0.925) !important;
             color: white !important;
+
             &:hover {
                 box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1), inset -5px -5px 10px rgb(255, 199, 17);
             }
         }
 
-        .selected{
-            
+        .selected {
+
             &:hover {
                 box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1), inset -5px -5px 10px rgb(255, 199, 17);
             }

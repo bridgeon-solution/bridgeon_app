@@ -6,8 +6,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 52%;
-    height: 249px;
+    height: 250px;
+    aspect-ratio: 1/1;
     scale: 0.8;
     border-radius: 13px;
     box-shadow: 4px 8px 20px 0 #80808047, 0 0 0 0 grey;
@@ -45,12 +45,15 @@
             stroke-linecap: round;
         }
     }
+
     .pointerHolder {
         position: absolute;
         rotate: 225deg;
-        width: 6%;
         top: 78%;
-        right: 58%;
+
+        left: 35%;
+        width: 6%;
+
         .pointer_stick {
             position: absolute;
             top: 25%;
@@ -87,10 +90,12 @@
             position: absolute;
             transform-origin: 0 76px;
             rotate: calc(342deg * var(--i));
+
             span {
                 rotate: 180deg;
             }
         }
+
         &::before {
             content: "";
             position: absolute;

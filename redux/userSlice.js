@@ -21,11 +21,11 @@ const authSlice = createSlice({
       state.auth = false;
     },
   },
-  extraReducers: {
-    [getUser.fulfilled]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(getUser.fulfilled, (state, action) => {
       state.userData = action.payload;
       console.log(action.payload);
-    },
+    });
   },
 });
 

@@ -5,7 +5,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import InformForm from "./forms/InformForm";
 import ConfirmForm from "./forms/ConfirmForm";
 import { useDispatch } from "react-redux";
-import { login } from "../../../redux/authSlice";
+import { login } from "../../../redux/userSlice";
 import { useRouter } from "next/router";
 
 const JoinInform = () => {

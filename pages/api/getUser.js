@@ -7,6 +7,7 @@ export default function handler(req, res) {
       { reason: "absence", date: "2023-01-3" },
       { reason: "absence", date: "2023-01-9" },
       { reason: "late", date: "2023-01-6" },
+      { reason: "late", date: "2023-01-8" },
     ],
   });
 }
