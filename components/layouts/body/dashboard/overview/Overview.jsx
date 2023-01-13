@@ -1,17 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Overview.module.scss";
 import Analog from "../../../../commons/Analog/Analog";
 import Calender from "../../../../commons/Calender/Calender";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../../../redux/userSlice";
 import { Avatar } from "@mui/material";
+import { getTopics } from "../../../../../redux/topicsSlice";
 const Overview = () => {
   const dispatch = useDispatch();
+  const [dayOfIndex, setIndexDay] = useState(0);
+  const [topics, setTopics] = useState([]);
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getTopics());
   }, []);
-  const user = useSelector((state) => state.userReducer.userData);
-  console.log(user, "JKH");
+  //on changing day of topics
+  const onActiveDay = (indexOfDay) => {
+    setIndexDay(indexOfDay);
+  };
+  const Redux_state = useSelector((state) => state);
+
+  const user = Redux_state.userReducer.userData;
+  const topicState = Redux_state.topicsReducer.topics;
+
+  useEffect(() => {
+    if (topicState.length) {
+      const sortedTopics = topicState.slice().sort(function (a, b) {
+        if (a.day < b.day) return -1;
+        if (a.day > b.day) return 1;
+      });
+      console.log(sortedTopics);
+      setTopics(sortedTopics);
+    }
+  }, [topicState]);
+
   return (
     <div className={style.container}>
       {/* status */}
@@ -33,20 +55,27 @@ const Overview = () => {
         {/* day bt day topics----------------------------- */}
         <div className={style.dayByDay}>
           <span className={style.title}>TOPICS</span>
-          <div className={style.allDays}>
-            {Array(100)
-              .fill()
-              .map((el, index) => (
-                <li key={index}>{index + 1} Day</li>
-              ))}
+          <div className={style.holder}>
+            <div className={style.allDays}>
+              {topics
+                .map((el, index) => (
+                  <li
+                    className={dayOfIndex == index ? style.active : null}
+                    onClick={() => onActiveDay(index)}
+                    key={index}
+                  >
+                    {el.day} Day
+                  </li>
+                ))}
+            </div>
           </div>
           {/* ------------------------------------- */}
           <div className={style.topics}>
-            {Array(100)
-              .fill()
-              .map((el, index) => (
-                <li key={index}>{index + 1} Day</li>
+            <ul>
+              {topics[dayOfIndex]?.topics.map((el, index) => (
+                <li key={index}>{el}</li>
               ))}
+            </ul>
           </div>
         </div>
         {/* attendance----------------------------- */}

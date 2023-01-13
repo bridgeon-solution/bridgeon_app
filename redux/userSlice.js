@@ -5,7 +5,7 @@ export const getUser = createAsyncThunk("auth/getUser", async () => {
   try {
     return userApi.getUser().then((res) => res.data);
   } catch (err) {
-    console.log(err);
+    console.log("Find Error on userSlice",err);
   }
 });
 

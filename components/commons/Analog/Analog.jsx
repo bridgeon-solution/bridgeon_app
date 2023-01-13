@@ -11,7 +11,7 @@ const Analog = ({ sx, label, count }) => {
       return (count * (270 - 0)) / 100 + 0; //finding the range by percentage
     },
     currentBarProgress: function () {
-      return (count * (56 - 100)) / 100 + 100; //finding the range by percentage
+      return (count * (55 - 100)) / 100 + 100; //finding the range by percentage
     },
   };
 

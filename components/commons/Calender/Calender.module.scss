@@ -2,9 +2,14 @@
     width: 100%;
     height: 100%;
     position: absolute;
+    padding: 21px;
+    border-width: 0 1px 0 1px;
+    border-style: solid;
+    border-color: rgb(233, 233, 233);
     z-index: 5;
 
     .calender {
+        
         // padding: 35px 35px 0;
         border: none;
         width: 100%;
