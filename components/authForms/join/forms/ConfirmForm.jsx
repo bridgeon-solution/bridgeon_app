@@ -1,35 +1,28 @@
 import { OutlinedInput, FormControl } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { setValidation } from "../../../../utils/validation/formValidation";
 
-const ConfirmForm = ({ setOtpConfirm }) => {
-  const [fieldsData, setFieldsData] = useState([
-    {
-      title: "OTP",
-      value: "",
-      validation: "Error",
-      placeholder: "Enter your OTP",
-    },
-    {
-      title: "Password",
-      value: "",
-      validation: "Error",
-      placeholder: "Enter a password",
-    },
-    {
-      title: "Password",
-      value: "",
-      validation: "Error",
-      placeholder: "Confirm password",
-    },
-  ]);
+const ConfirmForm = ({ setOtpConfirm, forwardFieldData, ButtonState }) => {
+  const [fieldsData, setFieldsData] = useState(setValidation.confirmValidation);
 
   useEffect(() => {
-    if(fieldsData[0].value.length==5){
-        console.log("Enter your otp")
+    if (fieldsData[0].value.length == 5) {
+      console.log("Enter your otp");
     }
-  }, [fieldsData])
-  
+  }, [fieldsData]);
+
+  const onFieldChange = (event, index) => {
+    setFieldsData(() =>
+      fieldsData.map(
+        (el, fieldIndex) =>
+          fieldIndex == index ? { ...el, value: event.target.value } : el // assigning values by checking their index
+      )
+    );
+    // forward data to mother components
+    if (ButtonState == "Send")
+      forwardFieldData((previousData) => [...previousData, ...fieldsData]);
+  };
   return (
     <div style={{ width: "100%" }}>
       <Container
@@ -46,13 +39,7 @@ const ConfirmForm = ({ setOtpConfirm }) => {
             >
               <FormControl sx={{ width: "80%" }}>
                 <OutlinedInput
-                  onChange={(e) =>
-                    setFieldsData(() =>
-                      fieldsData.map((el, fieldIndex) =>
-                        fieldIndex == index ? {...el,value:e.target.value} : el // assigning values by checking their index
-                      )
-                    )
-                  }
+                  onChange={(e) => onFieldChange(e, index)}
                   sx={{ color: "white", border: "1px solid gray" }}
                   placeholder={field.placeholder}
                 />

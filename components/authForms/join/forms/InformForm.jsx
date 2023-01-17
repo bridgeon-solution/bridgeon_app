@@ -1,28 +1,21 @@
 import { OutlinedInput, FormControl } from "@mui/material";
 import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import { setValidation } from "../../../../utils/validation/formValidation";
 
-const InformForm = () => {
-  const [fieldsData, setFieldsData] = useState([
-    {
-      title: "Your name",
-      value: "",
-      validation: "Error",
-      placeholder: "Enter your name",
-    },
-    {
-      title: "Email",
-      value: "",
-      validation: "Error",
-      placeholder: "Enter email",
-    },
-    {
-      title: "Phone",
-      value: "",
-      validation: "Error",
-      placeholder: "Enter phone number",
-    },
-  ]);
+const InformForm = ({ forwardFieldData }) => {
+  const [fieldsData, setFieldsData] = useState(setValidation.joinValidation);
+  // event fire on field changes
+  const onFieldChange = (event, index) => {
+    setFieldsData(() =>
+      fieldsData.map(
+        (el, fieldIndex) =>
+          fieldIndex == index ? { ...el, value: event.target.value } : el // assigning values by checking their index
+      )
+    );
+    // forward data to mother components
+    forwardFieldData(fieldsData);
+  };
 
   return (
     <div style={{ width: "100%" }}>
@@ -40,16 +33,7 @@ const InformForm = () => {
             >
               <FormControl sx={{ width: "80%" }}>
                 <OutlinedInput
-                  onChange={(e) =>
-                    setFieldsData(() =>
-                      fieldsData.map(
-                        (el, fieldIndex) =>
-                          fieldIndex == index
-                            ? { ...el, value: e.target.value }
-                            : el // assigning values by checking their index
-                      )
-                    )
-                  }
+                  onChange={(e) => onFieldChange(e, index)}
                   sx={{ color: "white", border: "1px solid gray" }}
                   placeholder={field.placeholder}
                 />
