@@ -41,17 +41,42 @@
             transition: all 1s;
         }
     }
-}
 
+    .error {
+        width: 30%;
+
+        position: absolute;
+        background-color: #1e1e1e;
+        color: white;
+     
+        bottom: 0;
+        background-color: red;
+        display: flex;
+        flex-direction: column;
+        animation: openAndClose 1s;
+
+       
+    }
+}
+.alert{
+    position: fixed;
+    top: 0;
+
+    animation: openAndClose 5s;
+    opacity: 0;
+
+}
 @keyframes openAndClose {
     0%,
     100% {
         height: 0;
         opacity: 0;
+        transform: translateY(-10px);
     }
 
     50% {
-        height: 100%;
+        height: 20px;
+        transform: translateY(10px);
         opacity: 1;
     }
 }

@@ -1,10 +1,12 @@
-import { OutlinedInput, FormControl } from "@mui/material";
-import React, { useState } from "react";
+import { OutlinedInput, FormControl, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { setValidation } from "../../../../utils/validation/formValidation";
+import { useValidator } from "../../../../utils/validation/validator";
 
-const InformForm = ({ forwardFieldData }) => {
+const InformForm = ({ forwardFieldData, submitStatus, setSubmitStatus }) => {
   const [fieldsData, setFieldsData] = useState(setValidation.joinValidation);
+  const validator = useValidator();
   // event fire on field changes
   const onFieldChange = (event, index) => {
     setFieldsData(() =>
@@ -14,9 +16,33 @@ const InformForm = ({ forwardFieldData }) => {
       )
     );
     // forward data to mother components
-    forwardFieldData(fieldsData);
+    // forwardFieldData(fieldsData);
   };
+  
+  console.log(submitStatus);
+  //checking validation on button click
+  useEffect(() => {
+    if (submitStatus) {
+      let checkedField = fieldsData.map((el) => {
+        let inValidData = validator(fieldsData).filter(
+          (els) => els.field == el.title
+        );
+        console.log(inValidData);
+        if (inValidData.length != 0) {
+          return { ...el, error: inValidData[0].error };
+        } else {
+          delete el.error;
+          return el;
+        }
+      });
 
+      setFieldsData(checkedField);
+      if (!validator(fieldsData).length) {
+        forwardFieldData(fieldsData);
+      }
+    }
+    setSubmitStatus(false);
+  }, [submitStatus]);
   return (
     <div style={{ width: "100%" }}>
       <Container
@@ -32,10 +58,18 @@ const InformForm = ({ forwardFieldData }) => {
               className="d-flex justify-content-center mt-4"
             >
               <FormControl sx={{ width: "80%" }}>
-                <OutlinedInput
+                <TextField
+                  error={field.error ? true : false}
+                  helperText={field?.error}
+                  InputProps={{
+                    style: { color: "gray" },
+                  }}
+                  InputLabelProps={{
+                    style: { color: "gray" },
+                  }}
+                  label={field.placeholder}
+                  variant="standard"
                   onChange={(e) => onFieldChange(e, index)}
-                  sx={{ color: "white", border: "1px solid gray" }}
-                  placeholder={field.placeholder}
                 />
               </FormControl>
             </Col>

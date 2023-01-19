@@ -4,6 +4,6 @@ const axios = axiosConfig(`${process.env.NEXT_PUBLIC_EXTERNAL_SERVER}/auth`);
 export const authApi = {
   login: (data) => axios.post("/login", data),
   join: (data) => axios.post("/join", data),
-  sendOtp: () => axios.post("/otp/send"),
+  sendOtp: (email) => axios.post("/otp/send",{email}),
   verifyOtp: (otp) => axios.post("/otp/verify", otp),
 };

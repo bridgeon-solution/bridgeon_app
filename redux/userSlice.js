@@ -21,15 +21,32 @@ export const login = createAsyncThunk("auth/login", async (data) => {
 export const verifyOtp = createAsyncThunk("auth/verification", async (data) => {
   console.log(data);
   try {
-    return authApi.verifyOtp(action.payload);
+    return authApi.verifyOtp(data.otp);
   } catch (err) {
     console.log("Ops", err);
   }
 });
+
+export const sendOtp = createAsyncThunk("auth/send", async (payload) => {
+  console.log(payload, "Helo");
+  try {
+    const response = await authApi.sendOtp(payload.email);
+    console.log(response);
+    const data = response.data;
+    localStorage.setItem(
+      "nonSerializableValue",
+      response.headers.nonSerializableValue
+    );
+    return { data };
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 // user all in one controller
 const authSlice = createSlice({
   name: "auth",
-  initialState: { auth: false, userData: {} },
+  initialState: { auth: false, userData: {}, otpState: "" },
   reducers: {
     // joining new user
     join: (state, action) => {
@@ -41,9 +58,6 @@ const authSlice = createSlice({
       state.auth = false;
     },
     //sending otp
-    sendOtp: () => {
-      authApi.sendOtp();
-    },
   },
   extraReducers: (builder) => {
     // get users with specific user id / username
@@ -60,9 +74,18 @@ const authSlice = createSlice({
     builder.addCase(verifyOtp.fulfilled, (state, action) => {
       console.log(action.payload);
     });
+    builder.addCase(sendOtp.pending, (state, action) => {
+      state.otpState = "pending";
+    });
+    builder.addCase(sendOtp.fulfilled, (state, action) => {
+      const { data } = action.payload;
+      state.otpState = "fulfilled";
+      const nonSerializableValue = localStorage.getItem("nonSerializableValue");
+      console.log(data, nonSerializableValue);
+    });
   },
 });
 
-export const { join, logout, sendOtp } = authSlice.actions;
+export const { join, logout } = authSlice.actions;
 
 export default authSlice.reducer;
