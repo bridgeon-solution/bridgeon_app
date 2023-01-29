@@ -21,12 +21,13 @@ export const login = createAsyncThunk("auth/login", async (data) => {
 export const verifyOtp = createAsyncThunk("auth/verification", async (data) => {
   console.log(data);
   try {
-    return authApi.verifyOtp(data.otp);
+    const response = await authApi.verifyOtp(data.otp, data.email);
+    return response.data;
   } catch (err) {
     console.log("Ops", err);
   }
 });
-
+//sending otp
 export const sendOtp = createAsyncThunk("auth/send", async (payload) => {
   console.log(payload, "Helo");
   try {
@@ -46,9 +47,15 @@ export const sendOtp = createAsyncThunk("auth/send", async (payload) => {
 // user all in one controller
 const authSlice = createSlice({
   name: "auth",
-  initialState: { auth: false, userData: {}, otpState: "" },
+  initialState: {
+    auth: false,
+    userData: {},
+    regUser: [],
+    onOTP: { onSent: "", verified: false, onVerify: "" },
+  },
   reducers: {
     // joining new user
+
     join: (state, action) => {
       authApi.join(action.payload);
     },
@@ -72,16 +79,18 @@ const authSlice = createSlice({
 
     //verifying entered otp
     builder.addCase(verifyOtp.fulfilled, (state, action) => {
-      console.log(action.payload);
+      state.onOTP.verified = action.payload.data;
+      state.onOTP.onVerify = "fulfilled";
     });
+    builder.addCase(verifyOtp.pending, (state, action) => {
+      state.onOTP.onVerify = "pending";
+    });
+    //sending otp
     builder.addCase(sendOtp.pending, (state, action) => {
-      state.otpState = "pending";
+      state.onOTP.onSent = "pending";
     });
     builder.addCase(sendOtp.fulfilled, (state, action) => {
-      const { data } = action.payload;
-      state.otpState = "fulfilled";
-      const nonSerializableValue = localStorage.getItem("nonSerializableValue");
-      console.log(data, nonSerializableValue);
+      state.onOTP.onSent = "fulfilled";
     });
   },
 });
