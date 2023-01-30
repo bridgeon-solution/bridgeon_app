@@ -33,6 +33,71 @@ export default function handler(req, res) {
         day: 7,
         topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
       },
+      {
+        day: 9,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 9,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      {
+        day: 7,
+        topics: ["Next Introduction", "HTML Tags", "HTML Symantic Element"],
+      },
+      
     ],
   });
 }

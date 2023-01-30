@@ -1,65 +1,30 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { userApi } from "./apis/userApi";
 import { authApi } from "./apis/authApi";
-// calling user api to get user data
-export const getUser = createAsyncThunk("auth/getUser", async () => {
-  try {
-    return userApi.getUser().then((res) => res.data);
-  } catch (err) {
-    console.log("Find Error on userSlice", err);
-  }
-});
-// calling login api
-export const login = createAsyncThunk("auth/login", async (data) => {
-  try {
-    return authApi.login(data);
-  } catch (err) {
-    console.log("Ops", err);
-  }
-});
-//verifying entered otp
-export const verifyOtp = createAsyncThunk("auth/verification", async (data) => {
-  console.log(data);
-  try {
-    const response = await authApi.verifyOtp(data.otp, data.email);
-    return response.data;
-  } catch (err) {
-    console.log("Ops", err);
-  }
-});
-//sending otp
-export const sendOtp = createAsyncThunk("auth/send", async (payload) => {
-  console.log(payload, "Helo");
-  try {
-    const response = await authApi.sendOtp(payload.email);
-    console.log(response);
-    const data = response.data;
-    localStorage.setItem(
-      "nonSerializableValue",
-      response.headers.nonSerializableValue
-    );
-    return { data };
-  } catch (err) {
-    console.log(err);
-  }
-});
+import {
+  getUser,
+  login,
+  sendOtp,
+  verifyOtp,
+  join,
+} from "./async_operations/userAsync";
 
 // user all in one controller
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     auth: false,
-    userData: {},
-    regUser: [],
-    onOTP: { onSent: "", verified: false, onVerify: "" },
+    userData: "",
+    inValid: "",
+    onOTP: {
+      onSent: "",
+      verified: false,
+      onVerify: "",
+      onJoin: "",
+      joined: false,
+    },
   },
   reducers: {
-    // joining new user
-
-    join: (state, action) => {
-      authApi.join(action.payload);
-    },
-
     // signing out
     logout: (state, action) => {
       state.auth = false;
@@ -74,7 +39,15 @@ const authSlice = createSlice({
     });
     // login
     builder.addCase(login.fulfilled, (state, action) => {
-      console.log(action.payload);
+      // 🔴 login redirection on login 
+      if (action.payload.error) {
+        state.inValid = action.payload.error;
+      }
+      if (action.payload.data) {
+        state.inValid = "";
+        state.userData = action.payload.data;
+        state.auth = true;
+      }
     });
 
     //verifying entered otp
@@ -92,9 +65,18 @@ const authSlice = createSlice({
     builder.addCase(sendOtp.fulfilled, (state, action) => {
       state.onOTP.onSent = "fulfilled";
     });
+
+    // joining new user
+    builder.addCase(join.fulfilled, (state, action) => {
+      state.onOTP.onJoin = "fulfilled";
+      state.onOTP.joined = action.payload.data;
+    });
+    builder.addCase(join.pending, (state, action) => {
+      state.onOTP.onJoin = "pending";
+    });
   },
 });
 
-export const { join, logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;

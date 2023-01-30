@@ -32,11 +32,11 @@ const confirm = [
 
     placeholder: "Enter a password",
   },
-  {
-    title: "Password",
-    value: "",
-    placeholder: "Confirm password",
-  },
+  // {
+  //   title: "Password",
+  //   value: "",
+  //   placeholder: "Confirm password",
+  // },
 ];
 
 export const setValidation = {

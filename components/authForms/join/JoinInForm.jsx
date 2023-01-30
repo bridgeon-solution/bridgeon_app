@@ -1,14 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import style from "./JoinInForm.module.scss";
-import { Alert, Button, FormControl, OutlinedInput } from "@mui/material";
-import { Col, Container, Row } from "react-bootstrap";
+import { Alert, Button } from "@mui/material";
+import { Col, Row } from "react-bootstrap";
 import InformForm from "./forms/InformForm";
 import ConfirmForm from "./forms/ConfirmForm";
 import { useDispatch, useSelector } from "react-redux";
-import { join, login, sendOtp, verifyOtp } from "../../../redux/userSlice";
+
 import { useRouter } from "next/router";
-import { useValidator } from "../../../utils/validation/validator";
 import { LoadingButton } from "@mui/lab";
+import {
+  join,
+  sendOtp,
+  verifyOtp,
+} from "../../../redux/async_operations/userAsync";
+import Link from "next/link";
 
 const JoinInform = () => {
   const diffBtn = {
@@ -39,8 +44,11 @@ const JoinInform = () => {
     onVerify(true);
   };
   const joinHandle = () => {
+    //triggering the moment of final process !this code is for validation process on child `ConfirmForm`component
+
     onJoin(true);
   };
+  // if anything new comes in field
   useEffect(() => {
     if (userInfo.length) {
       const userEmail = userInfo.filter((el) => el.title == "Email")[0].value;
@@ -56,7 +64,7 @@ const JoinInform = () => {
       }
     }
   }, [userInfo]);
-
+  // on sending otp & changing slide
   useEffect(() => {
     if (userController.onOTP.onSent === "fulfilled") {
       setTimeout(() => {
@@ -65,15 +73,25 @@ const JoinInform = () => {
       }, 4500);
     }
   }, [userController.onOTP.onSent]);
-
+  // on joining
+  useEffect(() => {
+    if (
+      userController.onOTP.onJoin === "fulfilled" &&
+      userController.onOTP.verified
+    ) {
+      setTimeout(() => {
+        route.push("/auth/login");
+      }, 3500);
+    }
+  }, [userController.onOTP.onJoin]);
+  // on otp verified
   useEffect(() => {
     if (userController.onOTP.verified) setButtonState(diffBtn.join);
   }, [userController.onOTP.verified]);
-  console.log(userController.otpState);
-  console.log(userController);
+
   return (
     <div className={style.container}>
-      <span>Bridgeon</span>
+      <span className={style.title}>Bridgeon</span>
       <form action="" method="post" ref={formRef}>
         <div
           className={style.slider}
@@ -97,6 +115,7 @@ const JoinInform = () => {
         <Row className="d-flex justify-content-center">
           <Col md={4} sm={12} className="d-flex justify-content-center">
             {userController.onOTP.onSent === "pending" ||
+            userController.onOTP.onVerify === "pending" ||
             userController.onOTP.onVerify === "pending" ? (
               <>
                 <LoadingButton
@@ -124,15 +143,19 @@ const JoinInform = () => {
             )}
           </Col>
         </Row>
+        <span style={{ color: "gray" }}>
+          {"already have a account "} <Link href={"/auth/login"}>sign in</Link>
+        </span>
       </form>
-      {userController.onOTP.onSent === "fulfilled" && (
-        <div className={style.alert}>
-          <Alert variant="filled" severity="info">
-            OTP Send successfully please check it out
-          </Alert>
-        </div>
-      )}
-      {userController.onOTP.onVerify == "fulfilled" &&
+      {userController.onOTP.onSent === "fulfilled" &&
+        !userController.onOTP.verified && (
+          <div className={style.alert}>
+            <Alert variant="filled" severity="info">
+              OTP Send successfully please check it out
+            </Alert>
+          </div>
+        )}
+      {userController.onOTP.onVerify === "fulfilled" &&
         (userController.onOTP.verified ? (
           <>
             <div className={style.alert}>
@@ -154,6 +177,13 @@ const JoinInform = () => {
             </div>
           </>
         ))}
+      {userController.onOTP.onJoin === "fulfilled" && (
+        <div className={style.alert}>
+          <Alert variant="filled" severity="success">
+            Successfully joined
+          </Alert>
+        </div>
+      )}
     </div>
   );
 };

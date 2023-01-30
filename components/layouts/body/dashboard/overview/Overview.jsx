@@ -3,9 +3,10 @@ import style from "./Overview.module.scss";
 import Analog from "../../../../commons/Analog/Analog";
 import Calender from "../../../../commons/Calender/Calender";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../../../../redux/userSlice";
+
 import { Avatar } from "@mui/material";
 import { getTopics } from "../../../../../redux/topicsSlice";
+import { getUser } from "../../../../../redux/async_operations/userAsync";
 const Overview = () => {
   const dispatch = useDispatch();
   const [dayOfIndex, setIndexDay] = useState(0);

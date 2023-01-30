@@ -1,21 +1,33 @@
-import { OutlinedInput, FormControl, TextField } from "@mui/material";
+import {
+  OutlinedInput,
+  FormControl,
+  TextField,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { setValidation } from "../../../../utils/validation/formValidation";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const ConfirmForm = ({
-  setOtpConfirm,
   forwardFieldData,
-  ButtonState,
   verifyState,
   onVerify,
   otpState,
   joinState,
-  onJoin
+  onJoin,
 }) => {
+  //setting up initial fields
   const [fieldsData, setFieldsData] = useState(setValidation.confirmValidation);
-  console.log(fieldsData);
+  //on password action
+  const [showPassword, onShowPassword] = useState(true);
+  const handleClickShowPassword = () => onShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
+  //field changes
   const onFieldChange = (event, index) => {
     setFieldsData(() =>
       fieldsData.map(
@@ -31,19 +43,19 @@ const ConfirmForm = ({
     onVerify(false);
   }, [verifyState]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (joinState) {
       forwardFieldData((previousData) => [...previousData, ...fieldsData]);
     }
-    onJoin(false)
-  },[joinState])
+    onJoin(false);
+  }, [joinState]);
   return (
     <div style={{ width: "100%" }}>
       <Container
         className="d-flex gap-5 flex-column flex-shrink-0"
         style={{ width: "85vw" }}
       >
-        <Row gap={5}>
+        <Row gap={5} className="d-flex justify-content-center">
           {fieldsData.map((field, index) => (
             <Col
               key={index}
@@ -60,6 +72,43 @@ const ConfirmForm = ({
                       helperText={field?.error}
                       InputProps={{
                         style: { color: "gray" },
+                      }}
+                      InputLabelProps={{
+                        style: { color: "gray" },
+                      }}
+                      label={field.placeholder}
+                      variant="standard"
+                      onChange={(e) => onFieldChange(e, index)}
+                    />
+                  </>
+                ) : field.title == "Password" ? (
+                  <>
+                    <TextField
+                      disabled={otpState ? false : true}
+                      error={field.error ? true : false}
+                      helperText={field?.error}
+                      InputProps={{
+                        style: { color: "gray" },
+                        type: !showPassword ? "text" : "password",
+                        endAdornment: (
+                          <>
+                            <InputAdornment position="end">
+                              <IconButton
+                                sx={{ color: "gray" }}
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          </>
+                        ),
                       }}
                       InputLabelProps={{
                         style: { color: "gray" },
@@ -96,4 +145,7 @@ const ConfirmForm = ({
   );
 };
 
+// endAdornment={
+
+// }
 export default ConfirmForm;
