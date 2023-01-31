@@ -16,6 +16,7 @@ const RouteOnAuth = ({ children, incomingPage }) => {
   useEffect(() => {
     //redirect to root path if user isn't there
     if (!auth && !router.route.includes("/auth/")) router.push("/");
+    if (auth && router.route.includes("/auth/")) router.push("/");
   }, [auth]);
 
   return router.route.includes("/auth/") && !auth ? (
