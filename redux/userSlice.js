@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userApi } from "./apis/userApi";
-import { authApi } from "./apis/authApi";
 import {
   getUser,
   login,
@@ -30,6 +28,10 @@ const authSlice = createSlice({
     // signing out
     logout: (state, action) => {
       state.auth = false;
+      localStorage.removeItem("token");
+    },
+    confirmLog: (state, action) => {
+      state.auth = action.payload;
     },
     //sending otp
   },
@@ -37,21 +39,23 @@ const authSlice = createSlice({
     // get users with specific user id / username
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.userData = action.payload;
+      const token = localStorage.getItem("token");
+      state.userData = token && decode(token);
       console.log(action.payload);
+
+      // 🔴 get user by using token impl
     });
     // login
     builder.addCase(login.fulfilled, (state, action) => {
-      // 🔴 login redirection on login
       if (action.payload.error) {
         state.inValid = action.payload.error;
-        state.auth = false;
       }
-      if (action.payload.data) {
+      if (action.payload.token) {
         state.inValid = "";
         state.token = action.payload.token;
+
         localStorage.setItem("token", state.token);
         state.userData = decode(state.token);
-        state.auth = true;
       }
     });
 
@@ -82,6 +86,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, confirmLog } = authSlice.actions;
 
 export default authSlice.reducer;

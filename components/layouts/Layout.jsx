@@ -5,19 +5,18 @@ import Header from "./header/Header";
 import Welcome from "./body/welcome/Welcome";
 import Head from "next/head";
 import styles from "../../styles/Home.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { confirmLog } from "../../redux/userSlice";
 // import { useMediaQuery } from "@mui/material";
 
-const RouteOnAuth = ({ children, incomingPage }) => {
-  const auth = useSelector((state) => state.userReducer.auth);
+const RouteOnAuth = ({ children, incomingPage, auth }) => {
   const router = useRouter();
 
   useEffect(() => {
-    //redirect to root path if user isn't there
-    if (!auth && !router.route.includes("/auth/")) router.push("/");
     if (auth && router.route.includes("/auth/")) router.push("/");
-  }, [auth]);
+  }, [children]);
 
   return router.route.includes("/auth/") && !auth ? (
     <>{incomingPage}</>
@@ -27,8 +26,25 @@ const RouteOnAuth = ({ children, incomingPage }) => {
 };
 
 const Layouts = ({ children }) => {
-  const auth = useSelector((state) => state.userReducer.auth);
+  const dispatch = useDispatch();
+  const [logged, setLogging] = useState();
 
+  const user = useSelector((state) => state.userReducer);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) dispatch(confirmLog(true));
+    else dispatch(confirmLog(false));
+  }, [user]);
+
+  useEffect(() => {
+    //redirect to root path if user isn't there
+    if (user.auth) {
+      setLogging(true);
+    } else {
+      setLogging(false);
+    }
+  }, [user.auth]);
+  console.log(user.userData);
   return (
     <>
       <Head>
@@ -40,15 +56,15 @@ const Layouts = ({ children }) => {
 
       {/* {Changing layout on route changes} */}
 
-      <RouteOnAuth incomingPage={children}>
+      <RouteOnAuth incomingPage={children} auth={logged}>
         <main className={styles.main}>
           {/* {authorized users only can asses dashboard} */}
-          {auth ? (
+          {logged ? (
             <>
               <section className={styles.layout}>
                 <Sidebar />
                 <div className={styles.body}>
-                  <Header />
+                  <Header logged={logged} user={user.userData} />
                   {children}
                 </div>
               </section>

@@ -15,11 +15,11 @@ export const login = createAsyncThunk("auth/login", async ({ data }) => {
   try {
     console.log(data);
     const response = await authApi.login(data);
-    
+
     return response.data;
   } catch (err) {
     console.log(err.response);
-    return {error:err.response.data.data}
+    return { error: err.response.data.data };
   }
 });
 //verifying entered otp

@@ -4,7 +4,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/userSlice";
 
-const ProfileMenu = ({ anchorEl, handleClose, open, Avatar }) => {
+const ProfileMenu = ({ anchorEl, handleClose, open, Avatar,user }) => {
   const dispatch = useDispatch();
 
   return (
@@ -44,7 +44,7 @@ const ProfileMenu = ({ anchorEl, handleClose, open, Avatar }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>{Avatar} Someone</MenuItem>
+        <MenuItem>{Avatar} {user.name}</MenuItem>
         <Divider />
 
         <MenuItem>

@@ -1,9 +1,12 @@
 /lib
-  /utils.js
+/utils.js
 /components
-  /Button.js
-  /Input.js
-  /Layout.js
+  /commons
+      /simple_components
+  /Layout
+     /body
+     /header
+     /sidebar
 /pages
   /index.js
   /about.js

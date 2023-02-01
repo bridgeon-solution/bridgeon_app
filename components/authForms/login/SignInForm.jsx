@@ -32,8 +32,8 @@ const SignInForm = () => {
   };
 
   useEffect(() => {
-    if (userController.userData) {
-      route.push("/");
+    if (userController.auth) {
+      route.push("/dashboard");
     }
   }, [userController]);
   return (
