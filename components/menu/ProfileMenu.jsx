@@ -2,9 +2,9 @@ import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 import { Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/userSlice";
+import { logout } from "../../redux/authSlice";
 
-const ProfileMenu = ({ anchorEl, handleClose, open, Avatar,user }) => {
+const ProfileMenu = ({ anchorEl, handleClose, open, Avatar, user }) => {
   const dispatch = useDispatch();
 
   return (
@@ -44,7 +44,9 @@ const ProfileMenu = ({ anchorEl, handleClose, open, Avatar,user }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>{Avatar} {user.name}</MenuItem>
+        <MenuItem>
+          {Avatar} {user?.name}
+        </MenuItem>
         <Divider />
 
         <MenuItem>

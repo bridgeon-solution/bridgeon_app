@@ -1,7 +1,10 @@
-import {axiosConfig} from "../../lib/axios";
-const axios = axiosConfig(process.env.NEXT_PUBLIC_INTERNAL_SERVER);
+import { axiosConfig } from "../../lib/axios";
+const axios = axiosConfig(`${process.env.NEXT_PUBLIC_EXTERNAL_SERVER}/api/users`);
 export const userApi = {
-  getUser: () => axios.get("/api/getUser"),
+  getProfile: () => {
+    axios.get("/profile");
+  },
+  getUser: () => axios.get("/getUser"),
   deleteUser: () => axios.delete(),
   updateUser: () => axios.put(),
 };

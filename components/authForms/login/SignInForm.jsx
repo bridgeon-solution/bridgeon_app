@@ -4,7 +4,7 @@ import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import Link from "next/link";
-import { login } from "../../../redux/async_operations/userAsync";
+import { login } from "../../../redux/async_operations/authAsync";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRouter } from "next/router";
 const SignInForm = () => {
@@ -20,6 +20,7 @@ const SignInForm = () => {
     event.preventDefault();
   };
 
+  const authController = useSelector((state) => state.authReducer);
   const userController = useSelector((state) => state.userReducer);
 
   const onChange = (e) => {
@@ -32,10 +33,10 @@ const SignInForm = () => {
   };
 
   useEffect(() => {
-    if (userController.auth) {
+    if (authController.auth) {
       route.push("/dashboard");
     }
-  }, [userController]);
+  }, [authController]);
   return (
     <div className={style.container}>
       <form action="" method="post">
@@ -44,10 +45,10 @@ const SignInForm = () => {
         </span>
 
         <TextField
-          error={userController.inValid?.field === "email" ? true : false}
+          error={authController.inValid?.field === "email" ? true : false}
           helperText={
-            userController.inValid?.field === "email"
-              ? userController.inValid?.error
+            authController.inValid?.field === "email"
+              ? authController?.error
               : ""
           }
           name="email"
@@ -56,10 +57,10 @@ const SignInForm = () => {
         />
 
         <TextField
-          error={userController.inValid?.field === "password" ? true : false}
+          error={authController.inValid?.field === "password" ? true : false}
           helperText={
-            userController.inValid?.field === "password"
-              ? userController.inValid?.error
+            authController.inValid?.field === "password"
+              ? authController.inValid?.error
               : ""
           }
           InputProps={{

@@ -12,7 +12,7 @@ import {
   join,
   sendOtp,
   verifyOtp,
-} from "../../../redux/async_operations/userAsync";
+} from "../../../redux/async_operations/authAsync";
 import Link from "next/link";
 
 const JoinInform = () => {

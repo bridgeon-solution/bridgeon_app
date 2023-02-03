@@ -4,7 +4,8 @@ import Dashboard from "../../components/layouts/body/dashboard/Dashboard";
 const notification = () => {
   return (
     <Dashboard>
-      <div>notification</div>
+          <UnderWorking />
+
     </Dashboard>
   );
 };

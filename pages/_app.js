@@ -7,7 +7,7 @@ import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 export default function App({ Component, pageProps }) {
-  const theme = useTheme();
+ 
   let matches = useMediaQuery("(min-width:728px)");
 
   return (
@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
               ⚠Your device resolution is not 🚫supported please try from another
               device which have more wide
             </h3>
-          </div>
+          </div> 
         </>
       )}
     </Provider>

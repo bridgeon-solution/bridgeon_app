@@ -8,43 +8,43 @@ import styles from "../../styles/Home.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { confirmLog } from "../../redux/userSlice";
+import { confirmLog } from "../../redux/authSlice";
+import { getProfile } from "../../redux/async_operations/userAsync";
+import { useCookies } from "react-cookie";
 // import { useMediaQuery } from "@mui/material";
 
-const RouteOnAuth = ({ children, incomingPage, auth }) => {
-  const router = useRouter();
+const DashboardLayout = ({ children }) => {
+  const dispatch = useDispatch();
+  const [cookie, setCookie, deleteCookie] = useCookies("log");
 
   useEffect(() => {
-    if (auth && router.route.includes("/auth/")) router.push("/");
+    dispatch(confirmLog(Boolean(cookie.log == "true")));
   }, [children]);
+  return (
+    <main className={styles.main}>
+      {/* {authorized users only can asses dashboard} */}
 
-  return router.route.includes("/auth/") && !auth ? (
-    <>{incomingPage}</>
-  ) : (
-    <>{children}</>
+      <>
+        <section className={styles.layout}>
+          <Sidebar />
+          <div className={styles.body}>
+            <Header user={""} />
+            {children}
+          </div>
+        </section>
+      </>
+    </main>
   );
 };
 
 const Layouts = ({ children }) => {
-  const dispatch = useDispatch();
   const [logged, setLogging] = useState();
 
-  const user = useSelector((state) => state.userReducer);
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) dispatch(confirmLog(true));
-    else dispatch(confirmLog(false));
-  }, [user]);
+  const route = useRouter();
 
-  useEffect(() => {
-    //redirect to root path if user isn't there
-    if (user.auth) {
-      setLogging(true);
-    } else {
-      setLogging(false);
-    }
-  }, [user.auth]);
-  console.log(user.userData);
+  const authController = useSelector((state) => state.authReducer);
+
+  console.log("log", logged);
   return (
     <>
       <Head>
@@ -56,26 +56,11 @@ const Layouts = ({ children }) => {
 
       {/* {Changing layout on route changes} */}
 
-      <RouteOnAuth incomingPage={children} auth={logged}>
-        <main className={styles.main}>
-          {/* {authorized users only can asses dashboard} */}
-          {logged ? (
-            <>
-              <section className={styles.layout}>
-                <Sidebar />
-                <div className={styles.body}>
-                  <Header logged={logged} user={user.userData} />
-                  {children}
-                </div>
-              </section>
-            </>
-          ) : (
-            <>
-              <Welcome />
-            </>
-          )}
-        </main>
-      </RouteOnAuth>
+      {authController.auth ? (
+        <DashboardLayout>{children}</DashboardLayout>
+      ) : (
+        <>{route.route.includes("/auth") ? <>{children}</> : <Welcome />}</>
+      )}
     </>
   );
 };
