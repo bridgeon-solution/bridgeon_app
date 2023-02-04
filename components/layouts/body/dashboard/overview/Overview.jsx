@@ -6,13 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Avatar } from "@mui/material";
 import { getTopics } from "../../../../../redux/topicsSlice";
-import { getUser } from "../../../../../redux/async_operations/userAsync";
+import {
+  getProfile,
+  getUser,
+} from "../../../../../redux/async_operations/userAsync";
 const Overview = () => {
   const dispatch = useDispatch();
   const [dayOfIndex, setIndexDay] = useState(0);
   const [topics, setTopics] = useState([]);
   useEffect(() => {
-    dispatch(getUser());
+    dispatch(getProfile());
     dispatch(getTopics());
   }, []);
   //on changing day of topics
@@ -58,16 +61,15 @@ const Overview = () => {
           <span className={style.title}>TOPICS</span>
           <div className={style.holder}>
             <div className={style.allDays}>
-              {topics
-                .map((el, index) => (
-                  <li
-                    className={dayOfIndex == index ? style.active : null}
-                    onClick={() => onActiveDay(index)}
-                    key={index}
-                  >
-                    {el.day} Day
-                  </li>
-                ))}
+              {topics.map((el, index) => (
+                <li
+                  className={dayOfIndex == index ? style.active : null}
+                  onClick={() => onActiveDay(index)}
+                  key={index}
+                >
+                  {el.day} Day
+                </li>
+              ))}
             </div>
           </div>
           {/* ------------------------------------- */}

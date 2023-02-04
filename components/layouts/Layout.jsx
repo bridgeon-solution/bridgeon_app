@@ -13,13 +13,7 @@ import { getProfile } from "../../redux/async_operations/userAsync";
 import { useCookies } from "react-cookie";
 // import { useMediaQuery } from "@mui/material";
 
-const DashboardLayout = ({ children }) => {
-  const dispatch = useDispatch();
-  const [cookie, setCookie, deleteCookie] = useCookies("log");
-
-  useEffect(() => {
-    dispatch(confirmLog(Boolean(cookie.log == "true")));
-  }, [children]);
+const DashboardLayout = ({ children, logged }) => {
   return (
     <main className={styles.main}>
       {/* {authorized users only can asses dashboard} */}
@@ -38,13 +32,20 @@ const DashboardLayout = ({ children }) => {
 };
 
 const Layouts = ({ children }) => {
-  const [logged, setLogging] = useState();
-
+  const [logged, setLogging] = useState(false);
   const route = useRouter();
 
   const authController = useSelector((state) => state.authReducer);
+  const userController = useSelector((state) => state.userReducer);
 
-  console.log("log", logged);
+  useEffect(() => {
+    if (authController.auth) {
+      setLogging(true);
+    } else {
+      setLogging(false);
+    }
+  }, [authController.auth]);
+
   return (
     <>
       <Head>
@@ -56,8 +57,8 @@ const Layouts = ({ children }) => {
 
       {/* {Changing layout on route changes} */}
 
-      {authController.auth ? (
-        <DashboardLayout>{children}</DashboardLayout>
+      {logged ? (
+        <DashboardLayout logged={logged}>{children}</DashboardLayout>
       ) : (
         <>{route.route.includes("/auth") ? <>{children}</> : <Welcome />}</>
       )}

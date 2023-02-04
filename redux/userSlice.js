@@ -11,13 +11,11 @@ const userSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getProfile.fulfilled, (state, action) => {
-      console.log(action.payload);
-      //   state.user = action.data;
+      console.log(action.payload.user,"🤵");
+      state.user = action.payload.user;
     });
 
     builder.addCase(getUser.fulfilled, (state, action) => {
-    
-
       // 🔴 get user by using token impl
     });
   },

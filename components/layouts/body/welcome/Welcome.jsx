@@ -13,7 +13,7 @@ const Welcome = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(confirmLog(Boolean(cookie.log == "true ")));
-  }, []);
+  }, [cookie]);
 
   return (
     <div className={style.main}>

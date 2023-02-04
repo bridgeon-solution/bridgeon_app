@@ -24,7 +24,7 @@ const JoinInform = () => {
   const formRef = useRef();
   const dispatch = useDispatch();
   const route = useRouter();
-  const userController = useSelector((state) => state.userReducer);
+  const authController = useSelector((state) => state.authReducer);
   const [slideProgress, setSlide] = useState(0);
 
   const [userInfo, setUserInfo] = useState([]);
@@ -59,35 +59,35 @@ const JoinInform = () => {
       } else {
         dispatch(sendOtp({ email: userEmail }));
       }
-      if (buttonState === diffBtn.join && userController.onOTP.verified) {
+      if (buttonState === diffBtn.join && authController.onOTP.verified) {
         dispatch(join(userInfo));
       }
     }
   }, [userInfo]);
   // on sending otp & changing slide
   useEffect(() => {
-    if (userController.onOTP.onSent === "fulfilled") {
+    if (authController.onOTP.onSent === "fulfilled") {
       setTimeout(() => {
         setSlide((progress) => (progress == -100 ? 0 : -100));
         setButtonState(diffBtn.verify);
       }, 4500);
     }
-  }, [userController.onOTP.onSent]);
+  }, [authController.onOTP.onSent]);
   // on joining
   useEffect(() => {
     if (
-      userController.onOTP.onJoin === "fulfilled" &&
-      userController.onOTP.verified
+      authController.onOTP.onJoin === "fulfilled" &&
+      authController.onOTP.verified
     ) {
       setTimeout(() => {
         route.push("/auth/login");
       }, 3500);
     }
-  }, [userController.onOTP.onJoin]);
+  }, [authController.onOTP.onJoin]);
   // on otp verified
   useEffect(() => {
-    if (userController.onOTP.verified) setButtonState(diffBtn.join);
-  }, [userController.onOTP.verified]);
+    if (authController.onOTP.verified) setButtonState(diffBtn.join);
+  }, [authController.onOTP.verified]);
 
   return (
     <div className={style.container}>
@@ -105,7 +105,7 @@ const JoinInform = () => {
           <ConfirmForm
             joinState={joinState}
             onJoin={onJoin}
-            otpState={userController.onOTP.verified}
+            otpState={authController.onOTP.verified}
             verifyState={VerifyState}
             onVerify={onVerify}
             forwardFieldData={setUserInfo}
@@ -114,9 +114,9 @@ const JoinInform = () => {
         </div>
         <Row className="d-flex justify-content-center">
           <Col md={4} sm={12} className="d-flex justify-content-center">
-            {userController.onOTP.onSent === "pending" ||
-            userController.onOTP.onVerify === "pending" ||
-            userController.onOTP.onVerify === "pending" ? (
+            {authController.onOTP.onSent === "pending" ||
+            authController.onOTP.onVerify === "pending" ||
+            authController.onOTP.onVerify === "pending" ? (
               <>
                 <LoadingButton
                   loading
@@ -147,16 +147,16 @@ const JoinInform = () => {
           {"already have a account "} <Link href={"/auth/login"}>sign in</Link>
         </span>
       </form>
-      {userController.onOTP.onSent === "fulfilled" &&
-        !userController.onOTP.verified && (
+      {authController.onOTP.onSent === "fulfilled" &&
+        !authController.onOTP.verified && (
           <div className={style.alert}>
             <Alert variant="filled" severity="info">
               OTP Send successfully please check it out
             </Alert>
           </div>
         )}
-      {userController.onOTP.onVerify === "fulfilled" &&
-        (userController.onOTP.verified ? (
+      {authController.onOTP.onVerify === "fulfilled" &&
+        (authController.onOTP.verified ? (
           <>
             <div className={style.alert}>
               <Alert variant="filled" severity="success">
@@ -177,7 +177,7 @@ const JoinInform = () => {
             </div>
           </>
         ))}
-      {userController.onOTP.onJoin === "fulfilled" && (
+      {authController.onOTP.onJoin === "fulfilled" && (
         <div className={style.alert}>
           <Alert variant="filled" severity="success">
             Successfully joined

@@ -28,10 +28,10 @@ const authSlice = createSlice({
     // signing out
     logout: (state, action) => {
       state.auth = false;
+      localStorage.removeItem("log")
     },
     confirmLog: (state, action) => {
-      console.log( action.payload);
-      state.auth = action.payload;
+      state.auth = localStorage.getItem("log") == "true";
     },
 
     //sending otp
@@ -45,7 +45,8 @@ const authSlice = createSlice({
       if (action.payload.data) {
         console.log(Boolean(cookie.get("log")), "😂");
         state.inValid = "";
-        state.auth = Boolean(cookie.get("log"));
+        localStorage.setItem("log", Boolean(cookie.get("log") == "true"));
+        state.auth = true;
       }
     });
 
