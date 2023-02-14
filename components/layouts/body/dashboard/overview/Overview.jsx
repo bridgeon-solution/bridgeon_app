@@ -14,6 +14,7 @@ const Overview = () => {
   const dispatch = useDispatch();
   const [dayOfIndex, setIndexDay] = useState(0);
   const [topics, setTopics] = useState([]);
+  const [chapters, setChapter] = useState([]);
   useEffect(() => {
     dispatch(getTopics());
     dispatch(getProfile());
@@ -38,6 +39,14 @@ const Overview = () => {
     }
   }, [topicState]);
 
+  useEffect(() => {
+    if (user.progress) {
+      setChapter(user.progress[0].chapter);
+      console.log(user.progress[0].chapter);
+    } else {
+      console.log("no", user.progress);
+    }
+  }, [user.progress]);
   return (
     <div className={style.container}>
       {/* status */}
@@ -61,7 +70,7 @@ const Overview = () => {
           <span className={style.title}>TOPICS</span>
           <div className={style.holder}>
             <div className={style.allDays}>
-              {topics.map((el, index) => (
+              {chapters?.map((el, index) => (
                 <li
                   className={dayOfIndex == index ? style.active : null}
                   onClick={() => onActiveDay(index)}
@@ -75,8 +84,27 @@ const Overview = () => {
           {/* ------------------------------------- */}
           <div className={style.topics}>
             <ul>
-              {topics[dayOfIndex]?.topics.map((el, index) => (
-                <li key={index}>{el}</li>
+              {chapters[dayOfIndex]?.topics.map((el, index) => (
+                <>
+                  {el.tasks.length ? (
+                    <>
+                      <li key={index}>
+                        {el.title}
+                        <div>
+                          {el.tasks?.map((els, index) => (
+                            <div className={style.task} key={index}>
+                              {els.title}
+                            </div>
+                          ))}
+                        </div>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li key={index}>{el.title}</li>
+                    </>
+                  )}
+                </>
               ))}
             </ul>
           </div>

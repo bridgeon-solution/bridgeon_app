@@ -3,7 +3,7 @@ export default function handler(req, res) {
     data: [
       {
         day: 1,
-        topics: [{title:"HTML Introduction",id:1}, "HTML Tags", "HTML Symantic Element"],
+        topics: ["HTML Introduction", "HTML Tags", "HTML Symantic Element"],
       },
       {
         day: 2,

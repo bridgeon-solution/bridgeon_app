@@ -11,8 +11,9 @@ const userSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getProfile.fulfilled, (state, action) => {
-      console.log(action.payload.user,"🤵");
+      console.log(action.payload.user, "🤵");
       state.user = action.payload.user;
+      // state.user.chapters = action.payload.user.progress[0];
     });
 
     builder.addCase(getUser.fulfilled, (state, action) => {
