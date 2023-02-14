@@ -6,18 +6,22 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import ProfileMenu from "../../menu/ProfileMenu";
 
-const Header = ({ logged, user }) => {
+const Header = ({ logged}) => {
   const [anchor, setAnchor] = useState(null);
-  console.log(user,"😍");
+ 
   const openMenu = Boolean(anchor);
 
   const route = useRouter();
   const ProfileAvatar = (
     <Avatar src="https://mui.com/static/images/avatar/3.jpg" />
   );
+
+  const userController = useSelector((state) => state.userReducer);
+
   const handleClose = () => {
     setAnchor(null);
   };
+ 
   return (
     <div className={style.header}>
       <span className={style.menu}>__</span>
@@ -29,7 +33,7 @@ const Header = ({ logged, user }) => {
               {ProfileAvatar}
             </IconButton>
             <ProfileMenu
-              user={user}
+              user={userController.user}
               open={openMenu}
               handleClose={handleClose}
               anchorEl={anchor}

@@ -15,8 +15,8 @@ const Overview = () => {
   const [dayOfIndex, setIndexDay] = useState(0);
   const [topics, setTopics] = useState([]);
   useEffect(() => {
-    dispatch(getProfile());
     dispatch(getTopics());
+    dispatch(getProfile());
   }, []);
   //on changing day of topics
   const onActiveDay = (indexOfDay) => {
@@ -24,7 +24,7 @@ const Overview = () => {
   };
   const Redux_state = useSelector((state) => state);
 
-  const user = Redux_state.userReducer.userData;
+  const user = Redux_state.userReducer.user;
   const topicState = Redux_state.topicsReducer.topics;
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const Overview = () => {
       <section>
         {/* performance------------------------- */}
         <div className={style.performance}>
-          <Analog label="Performance" count={50} />
+          <Analog label="Performance" count={user?.performance} />
         </div>
         {/* progress -----------------*/}
 

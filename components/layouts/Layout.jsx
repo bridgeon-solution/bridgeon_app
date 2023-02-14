@@ -14,6 +14,10 @@ import { useCookies } from "react-cookie";
 // import { useMediaQuery } from "@mui/material";
 
 const DashboardLayout = ({ children, logged }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProfile());
+  }, [children]);
   return (
     <main className={styles.main}>
       {/* {authorized users only can asses dashboard} */}
@@ -22,7 +26,8 @@ const DashboardLayout = ({ children, logged }) => {
         <section className={styles.layout}>
           <Sidebar />
           <div className={styles.body}>
-            <Header user={""} />
+            <Header logged={logged} />
+
             {children}
           </div>
         </section>
@@ -39,11 +44,7 @@ const Layouts = ({ children }) => {
   const userController = useSelector((state) => state.userReducer);
 
   useEffect(() => {
-    if (authController.auth) {
-      setLogging(true);
-    } else {
-      setLogging(false);
-    }
+    if (authController.auth) setLogging(true);
   }, [authController.auth]);
 
   return (

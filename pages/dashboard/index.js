@@ -1,12 +1,12 @@
-import React from "react";
-import Dashboard from "../../components/layouts/body/dashboard/Dashboard";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
 const index = () => {
-  return (
-    <Dashboard>
-      <div>index</div>
-    </Dashboard>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/dashboard/overview");
+  }, []);
 };
 
 export default index;

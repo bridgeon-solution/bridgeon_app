@@ -28,7 +28,11 @@ const authSlice = createSlice({
     // signing out
     logout: (state, action) => {
       state.auth = false;
-      localStorage.removeItem("log")
+      localStorage.removeItem("log");
+      cookie.remove("log");
+      cookie.remove("token");
+      window.location.reload();
+      window.location.pathname = "/";
     },
     confirmLog: (state, action) => {
       state.auth = localStorage.getItem("log") == "true";
