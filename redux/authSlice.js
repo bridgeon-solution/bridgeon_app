@@ -8,6 +8,7 @@ import {
 } from "./async_operations/authAsync";
 import { decode } from "../lib/jwt";
 import Cookie from "universal-cookie";
+import { authApi } from "./apis/authApi";
 const cookie = new Cookie();
 // user all in one controller
 const authSlice = createSlice({
@@ -29,8 +30,7 @@ const authSlice = createSlice({
     logout: (state, action) => {
       state.auth = false;
       localStorage.removeItem("log");
-      cookie.remove("log");
-      cookie.remove("token");
+      authApi.logout()
       window.location.reload();
       window.location.pathname = "/";
     },

@@ -8,4 +8,5 @@ export const authApi = {
   join: (data) => axios.post("/join", data),
   sendOtp: (email) => axios.post("/otp/send", { email }),
   verifyOtp: (otp, email) => axios.post("/otp/verify", { otp, email }),
+  logout: ()=> axios.post('/logout')
 };

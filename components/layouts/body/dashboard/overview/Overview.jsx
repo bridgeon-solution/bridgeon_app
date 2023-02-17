@@ -58,7 +58,7 @@ const Overview = () => {
         {/* progress -----------------*/}
 
         <div className={style.progress}>
-          <Analog label="Progress" count={10} />
+          <Analog label="Progress" count={user.progress?.[0].score} />
         </div>
         {/* ---------------------------------- */}
       </section>
@@ -113,7 +113,7 @@ const Overview = () => {
         </div>
         {/* attendance----------------------------- */}
         <div className={style.attendance}>
-          <Calender userActivity={user?.activity} />
+          <Calender userActivity={user?.attendance} />
         </div>
         {/* LeaderBoard ----------------------------*/}
         <div className={style.top}>
