@@ -10,6 +10,7 @@ import {
   getProfile,
   getUser,
 } from "../../../../../redux/async_operations/userAsync";
+ 
 const Overview = () => {
   const dispatch = useDispatch();
   const [dayOfIndex, setIndexDay] = useState(0);
