@@ -8,6 +8,7 @@ const Calender = ({ userActivity }) => {
   const reasons = {
     late: "late",
     absence: "absence",
+    excused: "excused absence",
   };
   const [date, onChange] = useState(new Date());
   console.log(date);
